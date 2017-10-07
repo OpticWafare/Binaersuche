@@ -64,6 +64,7 @@ public class BinaersuchTest {
 			if (arr[mitte] == zahl) { // Wenn die Zahl in der Mitte zufaelligerweise die richtige Zahl ist (Endbedingung)
 				System.out.println("Die Zahl " + arr[mitte] + " ist enthalten!"); //arr[mitte] == zahl
 				System.out.println("Anzahl der Durchläufe: " + zaehlen); 
+				System.out.println("Die minimale Anzahl von Durchläufen ist " + Math.ceil((Math.log(100)/ Math.log(2))) );
 				System.out.println("Die Zahl befindet sich im Index " + mitte); 
 				return mitte;	// index der Zahl zurueckgeben
 			}
@@ -80,6 +81,7 @@ public class BinaersuchTest {
 		}
 		System.out.println("Die Zahl " + zahl + " ist nicht enthalten!");
 		System.out.println("Anzahl der Durchläufe: " + zaehlen);
+		System.out.println("Die minimale Anzahl von Durchläufen ist " + Math.ceil((Math.log(100)/ Math.log(2))) );
 		return -1;
 	}
 
@@ -88,7 +90,7 @@ public class BinaersuchTest {
 		//arrayOrdnen();
 		//int[] arr2 = { 1,15,23,45,56,87};
 		int[] arr2 = { 1,1,1,2,3,4,4,5,5,5};
-		binaersuche(arr2, 27);
+		binaersuche(arr, 50);
 	}
 
 }
