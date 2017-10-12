@@ -2,6 +2,7 @@ public class BinaersuchTest {
 
 
 	public static int[] arr = new int[101];		
+	public static int zaehler = 0;
 
 	
 	static void arrayfuellen() {
@@ -43,7 +44,7 @@ public class BinaersuchTest {
 
 	/** 
 	 * Sucht eine bestimmte Zahl in einem Array und
-	 * gibt den Index, an dem sich die Zahl befindet, zurueck
+	 * gibt den Index, an dem sich die Zahl befindet, die Anzahl der Durchläufe, die maximale Anzahl an Durchläufen und die minimale Anzahl an Durchläufen zurueck
 	 * Vorraussetzung: Das Array muss der groesse nach aufsteigend sortiert sein
 	 * @param arr Das Integer Array, in dem die zu suchende Zahl ist
 	 * @param zahl Die Zahl, die gesucht werden soll
@@ -87,9 +88,62 @@ public class BinaersuchTest {
 		return -1;
 	}
 
+	/** 
+	 * Sucht eine bestimmte Zahl in einem Array und
+	 * gibt den Index, an dem sich die Zahl befindet, die Anzahl der Durchläufe, die maximale Anzahl an Durchläufen und die minimale Anzahl an Durchläufen zurueck
+	 * Vorraussetzung: Das Array muss der groesse nach aufsteigend sortiert sein
+	 * @param arr Das Integer Array, in dem die zu suchende Zahl ist
+	 * @param zahl Die Zahl, die gesucht werden soll
+	 * @param max Die höchste Zahl im Array
+	 * @param min Die kleinste Zahl im Array
+	 * @return Der Index an dem sich zahl im Array arr befindet; Falls die Zahl nicht im Array vorkommt, wird -1 zurueckgegeben 
+	 * 		   oder es wird die Methode so lange ausgeführt bis arr[mitte] == der Suchzahl ist  */
+				
+	static int binaersucheRekursiv(int[] arr, int zahl, int max, int min) {
+		/** Der Index in der Mitte des Arraybereiches*/
+		int mitte = 0;
+		
+			mitte = (max + min) / 2; // Der Wert in der Mitte berechnen
+			zaehler++; // globale Zählervariable wird erhöht
+			
+			if (arr[mitte] == zahl) { // Wenn die Zahl in der Mitte zufaelligerweise die richtige Zahl ist (Endbedingung)
+				System.out.println("Die Zahl " + arr[mitte] + " ist enthalten!"); //arr[mitte] == zahl
+				System.out.println("Anzahl der Durchläufe: " + zaehler);
+				System.out.println("Die maximale Anzahl von Durchläufen ist " + maxAnzDurchlaufe(arr.length, 2)) ;
+				System.out.println("Die minimale Anzahl von Durchläufen ist immer 1!");
+				System.out.println("Die Zahl befindet sich im Index " + mitte); 
+				return mitte;	// index der Zahl zurueckgeben
+			}
+			// Wenn die gesuchte Zahl kleiner ist als die Zahl in der Mitte
+			// -> Arraybereich verkleinern indem der End-Index auf den Index in der Mitte gesetzt wird (alle Zahlen nach der Mitte werden nicht mehr durchsucht)
+			else if (arr[mitte] > zahl){
+				max = mitte;
+				return binaersucheRekursiv(arr, zahl, max, min); //Methode wird mit neuem max erneut ausgeführt
+			}
+			// Wenn die gesuchte Zahl groessrr ist als die Zahl in der Mitte
+			// -> Arraybereich verkleinern indem der Start-Index auf den Index in der Mitte gesetzt wird (alle Zahlen vor der Mitte werden nicht mehr durchsucht)
+			else if (arr[mitte] < zahl) { 
+				min = mitte; 
+				return binaersucheRekursiv(arr, zahl, max, min); //Methode wird mit neuem min ausgeführt 
+			}
+			System.out.println("Die Zahl " +  zahl + " ist nicht enthalten!");
+			System.out.println("Anzahl der Durchläufe: " + zaehler);
+			System.out.println("Die maximale Anzahl von Durchläufen ist " + maxAnzDurchlaufe(arr.length, 2));
+			System.out.println("Die minimale Anzahl von Durchläufen ist immer 1!");
+			return -1;	
+			
+	}
+
+	
+	/**
+	 * 
+	 * @param length Die Länge des verwendeten Arrays
+	 * @param base ist in unserem Fall 2
+	 * @return
+	 */
 	static double maxAnzDurchlaufe(double length, double base)
 	{
-		return Math.ceil(Math.log(length)/Math.log(base));
+		return Math.ceil(Math.log(length)/Math.log(base)); // Math.ceil zum aufrunden, da keine halben Durchläufe möglich sind
 	}
 	
 	
@@ -98,7 +152,8 @@ public class BinaersuchTest {
 		//arrayOrdnen();
 		//int[] arr2 = { 1,15,23,45,56,87};
 		int[] arr2 = { 1,1,1,2,3,4,4,5,5,5};
-		binaersuche(arr, 50);
+		binaersucheRekursiv(arr, 25, arr.length, 0);
+		//binaersuche(arr2, 6);
 	}
 
 }
